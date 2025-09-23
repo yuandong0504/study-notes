@@ -1,7 +1,3 @@
-# FSM Smart Lamp
-
-> 阶段 1 · 最小版 README
-
 # 💡 FSM Smart Lamp
 ---
 
