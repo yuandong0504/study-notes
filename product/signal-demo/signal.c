@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 #define WRITE_LIT(fd,LIT)\
-	write(fd,LIT,sizeof(LIT)-1)
+	(void)write(fd,LIT,sizeof(LIT)-1)
 volatile sig_atomic_t stop=0;
 void handle_sigint(int sig){
 	(void)sig;
