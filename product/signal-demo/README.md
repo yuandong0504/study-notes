@@ -1,45 +1,62 @@
-# Signal Demo (C)
+# 🛠️ Signal Demo (C)
 
-这是一个最小的 C 语言信号处理实验，用来演示如何**安全地捕获 Ctrl+C (SIGINT)** 并优雅退出。
+这是一个最小可用的 **C 语言信号处理实验**，展示如何安全地捕捉 `SIGINT` (Ctrl+C) 并优雅退出。  
 
-## 特性
-- 捕获 `SIGINT` (Ctrl+C)
-- 使用 `volatile sig_atomic_t` 标志与主循环通信
-- 在信号处理函数中仅使用 `write()`（async-signal-safe）
-- 提供宏 `WRITE_LIT`，自动计算字符串长度，避免 `strlen()`
+---
 
-## 编译与运行
-```bash
-make          # 编译
-make run      # 运行
-make clean    # 清理
+## ✨ 功能
+- 捕捉 `Ctrl+C` (SIGINT)
+- 输出提示信息
+- 使用 `volatile sig_atomic_t` 标志位保证安全
+- 宏 `WRITE_LIT` 简化安全写入
+
+---
+
+## 📂 目录结构
+```
+product/signal-demo/
+ ├── signal.c       # 核心源码
+ ├── Makefile       # 构建脚本
+ ├── run_demo.sh    # 一键运行脚本
+ └── README.md      # 项目说明
 ```
 
-或者手动编译：
+---
+
+## ⚡ 编译 & 运行
+
+### 方法 1：手动
 ```bash
-gcc -Wall -O2 -o signal signal.c
-./signal
+make        # 编译
+./signal    # 运行
 ```
 
-## 示例输出
+### 方法 2：一键运行 🚀
+```bash
+chmod +x run_demo.sh   # 赋予执行权限（只需一次）
+./run_demo.sh
+```
+
+---
+
+## 📋 示例输出
 ```
 Running... press Ctrl+C to stop.
-tick...
 tick...
 tick...
 ^C[SIGINT]: signal catched
 Exiting cleanly.
 ```
-## 🚀 一键运行
 
-本项目提供了一个简单脚本 `run_demo.sh`，可以一键编译并运行：
+---
 
-```bash
-chmod +x run_demo.sh   # 赋予执行权限（只需一次）
-./run_demo.sh
+## 🧠 说明
+- 信号处理函数应尽量**简单**：只设置标志位或调用安全函数（如 `write`）。
+- 不要在信号处理器里调用 `printf` 之类的 **非异步安全**函数。
+- 主循环检查标志位后，进行清理并退出。
+- 这是 **安全信号处理的基本模式**。
 
-## 说明
-- 信号处理函数应尽量简单，仅设置标志位或调用 async-signal-safe 函数。
-- 清理和退出逻辑交由主循环完成。
-- 本 demo 展示了 **安全信号处理的基本模式**。
-o
+---
+
+## 📜 License
+MIT
